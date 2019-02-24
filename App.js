@@ -1,15 +1,15 @@
-import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import React from "react";
+import { StyleSheet, TextInput, View, Text } from "react-native";
 
-import { API_KEY } from './utils/WeatherAPIKey';
-import weatherCondition from './utils/WeatherConditions';
-import WeatherInfo from './components/WeatherInfo';
+import { API_KEY } from "./utils/WeatherAPIKey";
+import weatherCondition from "./utils/WeatherConditions";
+import WeatherInfo from "./components/WeatherInfo";
 
 export default class App extends React.Component {
   state = {
     isLoading: false,
-    discoveredCityName: '',
-    discoveredCountryCode: '',
+    discoveredCityName: "",
+    discoveredCountryCode: "",
     temperature: 0,
     error: null,
     weatherCondition: null
@@ -22,7 +22,7 @@ export default class App extends React.Component {
       },
       error => {
         this.setState({
-          error: 'Error Fetching Weather Condtions'
+          error: "Error Fetching Weather Condtions"
         });
       }
     );
@@ -77,7 +77,7 @@ export default class App extends React.Component {
       },
       error => {
         this.setState({
-          error: 'Error Fetching Weather Condtions'
+          error: "Error Fetching Weather Condtions"
         });
       }
     );
@@ -92,30 +92,51 @@ export default class App extends React.Component {
     const condition = weatherCondition
       ? "It's currently " +
         parseInt(temperature) +
-        ' degrees Celsius with ' +
+        " degrees Celsius with " +
         weatherCondition +
-        ' in ' +
+        " in " +
         discoveredCityName +
-        ', ' +
+        ", " +
         discoveredCountryCode
-      : 'No results';
+      : "No results";
 
     return (
-      <View style={styles.container}>
-        <TextInput
-          value={this.state.city}
-          onChangeText={city => this.setCity(city)}
-        />
-        <WeatherInfo content={condition} />
-      </View>
+      <React.Fragment>
+        <Text style={styles.heading}>React Native</Text>
+        <View style={styles.container}>
+          <TextInput
+            onChangeText={city => this.setCity(city)}
+            placeholder="Enter city name..."
+            style={styles.input}
+            value={this.state.city}
+          />
+          <WeatherInfo content={condition} />
+        </View>
+      </React.Fragment>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#fff",
     flex: 1,
-    marginTop: 50,
-    backgroundColor: '#fff'
+    paddingTop: 50
+  },
+
+  heading: {
+    backgroundColor: "#fff",
+    color: "#000",
+    fontSize: 24,
+    marginLeft: 10,
+    marginTop: 10
+  },
+
+  input: {
+    borderWidth: 1,
+    borderColor: "transparent",
+    borderBottomColor: "#111",
+    marginLeft: 10,
+    marginRight: 10
   }
 });
